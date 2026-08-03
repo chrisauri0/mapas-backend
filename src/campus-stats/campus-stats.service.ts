@@ -11,6 +11,12 @@ export class CampusStatsService {
   private usuariosActivos = 0;
   private picoUsuariosHoy = 0;
   private totalRutasHoy = 0;
+
+    private pasosHoy = 0;
+
+
+
+  
   private busquedasPorDestino = new Map<string, { nombre: string; count: number }>();
   private distanciaTotalHoy = 0;
   private ultimaRuta: {
@@ -29,6 +35,19 @@ export class CampusStatsService {
   decrementUsuarios(): void {
     this.usuariosActivos = Math.max(0, this.usuariosActivos - 1);
   }
+
+
+
+registrarPasos(cantidad: number): void {
+  this.pasosHoy += cantidad;
+}
+
+getActividadWearable() {
+  return {
+    pasosHoy: this.pasosHoy,
+    ultimaLlegada: this.ultimaRuta, // reusamos el mismo dato que ya tienes
+  };
+}
 
   registrarRuta(payload: RutaRegistro): void {
     const actual = this.busquedasPorDestino.get(payload.destinoId) ?? {
